@@ -1,4 +1,6 @@
 
+using Scalar.AspNetCore;
+
 namespace WebApplication1
 {
     public class Program
@@ -12,22 +14,18 @@ namespace WebApplication1
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+          //  builder.Services.AddSwaggerGen();
+            builder.Services.AddOpenApi();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+          
+
             if (app.Environment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.MapOpenApi();
+                app.MapScalarApiReference();
             }
-            app.UseSwagger();
-
-            // Swagger UI'yi belirli bir endpoint üzerinde sunun
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty; // Bu, Swagger UI'yi ana sayfada gösterir
-            });
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
